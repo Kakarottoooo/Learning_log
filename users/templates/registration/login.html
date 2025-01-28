@@ -1,0 +1,32 @@
+{% extends "learning_logs/base.html" %}
+<!-- Inherit the layout and structure from base.html -->
+
+{% load bootstrap4 %}
+<!-- Load Bootstrap4 for styling -->
+
+{% block page_header %}
+    <!-- Define the page_header block for this page -->
+    <h2>Log in to your account.</h2>
+    <!-- Header message for the login page -->
+{% endblock page_header %}
+
+{% block content %}
+    <!-- Define the content block for this page -->
+
+    <form method="post" action="{% url 'users:login' %}" class="form">
+        <!-- POST form for logging in -->
+        {% csrf_token %}
+        <!-- Include the CSRF token for security -->
+
+        {% bootstrap_form form %}
+        <!-- Render the login form using Bootstrap styling -->
+
+        {% buttons %}
+        <!-- Wrap the login button with Bootstrap's button styling -->
+            <button name="submit" class="btn btn-primary">Log in</button>
+        {% endbuttons %}
+
+        <!-- Redirect users back to the index page after logging in -->
+        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
+    </form>
+{% endblock content %}

@@ -1,0 +1,104 @@
+{% load bootstrap4 %}
+<!-- Load the Bootstrap4 template tag library for styling and scripts -->
+
+<!doctype html>
+<html lang="en">
+    <!-- Declare the document as an HTML5 document and set the language to English -->
+<head>
+    <meta charset="utf-8">
+    <!-- Set the character encoding for the document -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Ensure proper rendering and touch zooming on all devices -->
+
+    <title>Learning Log</title>
+    <!-- Define the title of the webpage -->
+
+    {% bootstrap_css %}
+    <!-- Load the Bootstrap CSS for styling -->
+
+    {% bootstrap_javascript jquery='full' %}
+    <!-- Load Bootstrap JavaScript along with full jQuery support -->
+</head>
+
+<body>
+    <!-- Start of the body section -->
+
+    <!-- Navigation bar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+        <!-- Define a responsive, light-themed navbar with bottom margin and border -->
+
+        <a class="navbar-brand" href="{% url 'learning_logs:index' %}">
+            Learning Log
+        </a>
+        <!-- Brand logo linked to the homepage -->
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarCollapse" aria-controls="navbarCollapse"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <!-- Collapsible button for smaller screens -->
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <!-- Collapsible content container for links -->
+
+            <ul class="navbar-nav mr-auto">
+                <!-- Left-aligned navigation links -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'learning_logs:topics' %}">
+                        Topics
+                    </a>
+                    <!-- Link to the Topics page -->
+                </li>
+            </ul>
+
+            <ul class="navbar-nav ml-auto">
+                <!-- Right-aligned navigation links -->
+                {% if user.is_authenticated %}
+                    <!-- Check if the user is logged in -->
+                    <li class="nav-item">
+                        <span class="navbar-text">Hello, {{ user.username }}.</span>
+                        <!-- Display the username of the logged-in user -->
+                    </li>
+                    <li class="nav-item">
+                        <!-- Form for logging out using POST -->
+                        <form id="logout-form" action="{% url 'users:logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <!-- CSRF token for security -->
+                            <button type="submit" class="btn btn-link nav-link" style="display: inline; padding: 0; border: none; background: none; color: inherit;">
+                                Log out
+                            </button>
+                        </form>
+                        <!-- Use a form to send a POST request for logout -->
+                    </li>
+                {% else %}
+                    <!-- Links for unauthenticated users -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+                        <!-- Link to the registration page -->
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users:login' %}">Log in</a>
+                        <!-- Link to the login page -->
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <main role="main" class="container">
+        <!-- Main content container -->
+        <div class="pb-2 mb-2 border-bottom">
+            <!-- Header section with padding and bottom border -->
+            {% block page_header %}{% endblock page_header %}
+            <!-- Placeholder for page-specific headers -->
+        </div>
+        <div>
+            {% block content %}{% endblock content %}
+            <!-- Placeholder for page-specific content -->
+        </div>
+    </main>
+</body>
+
+</html>

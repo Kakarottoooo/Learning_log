@@ -1,0 +1,26 @@
+{% extends "learning_logs/base.html" %}
+<!-- Inherit the layout and structure from base.html -->
+
+{% block content %}
+    <!-- Define the content block for this page -->
+
+    <!-- Link back to the specific topic -->
+    <p><a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a></p>
+    <!-- The link redirects to the topic page associated with this entry -->
+
+    <!-- Header for adding a new entry -->
+    <p>Add a new entry:</p>
+
+    <!-- Form for submitting a new entry -->
+    <form action="{% url 'learning_logs:new_entry' topic.id %}" method="post">
+        <!-- The form action points to the 'new_entry' view, passing the topic ID -->
+        {% csrf_token %}
+        <!-- Include the CSRF token for form security -->
+
+        {{ form.as_p }}
+        <!-- Render the Django form fields as paragraphs -->
+
+        <button name="submit">Add entry</button>
+        <!-- Submit button to add the new entry -->
+    </form>
+{% endblock content %}

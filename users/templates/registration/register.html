@@ -1,0 +1,21 @@
+{% extends "learning_logs/base.html" %}
+<!-- Inherit the layout and structure from base.html -->
+
+{% block content %}
+    <!-- Define the content block for this page -->
+
+    <form method="post" action="{% url 'users:register' %}">
+        <!-- POST form for registering a new account -->
+        {% csrf_token %}
+        <!-- Include the CSRF token for security -->
+
+        {{ form.as_p }}
+        <!-- Render the registration form fields as paragraphs -->
+
+        <button name="submit" class="btn btn-primary">Register</button>
+        <!-- Submit button for registering a new account -->
+
+        <!-- Redirect users back to the index page after registration -->
+        <input type="hidden" name="next" value="{% url 'learning_logs:index' %}" />
+    </form>
+{% endblock content %}

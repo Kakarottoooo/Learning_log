@@ -1,0 +1,46 @@
+{% extends "learning_logs/base.html" %}
+<!-- Inherit the layout and structure from base.html -->
+
+{% block page_header %}
+    <!-- Define the page_header block for this page -->
+    <h3>{{ topic }}</h3>
+    <!-- Display the topic name as a header -->
+{% endblock page_header %}
+
+{% block content %}
+    <!-- Define the content block for this page -->
+
+    <!-- Display the topic name -->
+    <p>Topic: {{ topic }}</p>
+
+    <!-- Display the entries header -->
+    <p>Entries:</p>
+
+    <!-- Link to add a new entry for the current topic -->
+    <p>
+        <a href="{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
+    </p>
+
+    <!-- Loop through each entry related to the topic -->
+    {% for entry in entries %}
+        <div class="card mb-3">
+            <!-- Bootstrap card to display entry details -->
+            <h4 class="card-header">
+                {{ entry.date_added|date:'M d, Y H:i' }}
+                <!-- Display the date and time the entry was added -->
+                <small>
+                    <a href="{% url 'learning_logs:edit_entry' entry.id %}">Edit entry</a>
+                    <!-- Link to edit the current entry -->
+                </small>
+            </h4>
+
+            <div class="card-body">
+                {{ entry.text|linebreaks }}
+                <!-- Display the entry text with line breaks rendered as HTML -->
+            </div>
+        </div>
+    {% empty %}
+        <!-- Message if there are no entries for the topic -->
+        <p>There are no entries for this topic yet.</p>
+    {% endfor %}
+{% endblock content %}
